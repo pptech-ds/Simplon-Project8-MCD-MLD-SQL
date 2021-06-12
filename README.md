@@ -33,3 +33,10 @@ For a group of real estate agencies, you have to model the database with the fol
   - PROPERTY(1,1)->(property is)->(0,n)PROPERTY_CATEGORY: A property need to be in one and only one specific category, it can a flat, house, parking, garage, office, castle etc ... One category can have many properties.  
   - USER(0,n)->(user registers)->(1,1)ADVERTISEMENT: One user can register 0 or many advertisments, but one advertisments can be registered by one and only one user.
   - USER(0,n)->(user updates)->(0,n)ADVERTISEMENT: One user can updates 0 to many times the advertisement, the advertisement can be updated 0 to many times.   
+
+# LDM (MLD in French) generated from CDM:
+![image](https://user-images.githubusercontent.com/61125395/121762761-43bd0400-cb38-11eb-8e9f-ca7d1f47edca.png)  
+We finally have 10 entities, we had 7 entities in our CDM, some relationships have be changed to entities with foreign keys.  
+
+
+
