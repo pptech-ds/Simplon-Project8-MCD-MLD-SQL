@@ -7,7 +7,7 @@ For a group of real estate agencies, you have to model the database with the fol
   - You can complete with any other informations.  
 
 # CDM (MCD in French) based on inputs:  
-![image](https://user-images.githubusercontent.com/61125395/121762560-effdeb00-cb36-11eb-9581-57f013fcd43f.png)          
+![image](https://user-images.githubusercontent.com/61125395/121763697-6e11c000-cb3e-11eb-9301-9a5f632cb7db.png)          
 - Entities with their attributes:
   - USER:  
   ![image](https://user-images.githubusercontent.com/61125395/121761898-0144f880-cb33-11eb-822a-e45264064d59.png)  
@@ -38,5 +38,221 @@ For a group of real estate agencies, you have to model the database with the fol
 ![image](https://user-images.githubusercontent.com/61125395/121762761-43bd0400-cb38-11eb-8e9f-ca7d1f47edca.png)  
 We finally have 10 entities, we had 7 entities in our CDM, some relationships have be changed to entities with foreign keys.  
 
+# SQL script generated from CDM:  
+I had to complete the last table beacause of limitation from JMerise free version.  
+```SQL
+#------------------------------------------------------------
+#        Script MySQL.
+#------------------------------------------------------------
 
+
+#------------------------------------------------------------
+# Table: USER
+#------------------------------------------------------------
+
+CREATE TABLE USER(
+        idUser         Int  Auto_increment  NOT NULL ,
+        userFirstname  Varchar (150) NOT NULL ,
+        userLastname   Varchar (150) NOT NULL ,
+        userEmail      Varchar (150) NOT NULL ,
+        userPassword   Varchar (50) NOT NULL ,
+        userCountry    Varchar (150) NOT NULL ,
+        userAddress    Varchar (150) NOT NULL ,
+        userCity       Varchar (150) NOT NULL ,
+        userZipCode    Int NOT NULL ,
+        userSalary     Float NOT NULL ,
+        userCommission Float NOT NULL
+	,CONSTRAINT USER_PK PRIMARY KEY (idUser)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: AGENCY
+#------------------------------------------------------------
+
+CREATE TABLE AGENCY(
+        idAgency                 Int  Auto_increment  NOT NULL ,
+        agencyName               Varchar (150) NOT NULL ,
+        agencyCountry            Varchar (150) NOT NULL ,
+        agencyAddress            Varchar (150) NOT NULL ,
+        agencyCity               Varchar (150) NOT NULL ,
+        agencyZipCode            Int NOT NULL ,
+        agencyRegistrationNumber Varchar (150) NOT NULL
+	,CONSTRAINT AGENCY_PK PRIMARY KEY (idAgency)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: ADVERTISEMENT
+#------------------------------------------------------------
+
+CREATE TABLE ADVERTISEMENT(
+        idAdvertisement          Int  Auto_increment  NOT NULL ,
+        advertisementTitle       Varchar (150) NOT NULL ,
+        advertisementDescription Varchar (500) NOT NULL ,
+        advertisementPrice       Float NOT NULL ,
+        agencyPublishDate        TimeStamp NOT NULL ,
+        userRegisterDate         TimeStamp NOT NULL ,
+        idAgency                 Int NOT NULL ,
+        idUser                   Int NOT NULL
+	,CONSTRAINT ADVERTISEMENT_PK PRIMARY KEY (idAdvertisement)
+
+	,CONSTRAINT ADVERTISEMENT_AGENCY_FK FOREIGN KEY (idAgency) REFERENCES AGENCY(idAgency)
+	,CONSTRAINT ADVERTISEMENT_USER0_FK FOREIGN KEY (idUser) REFERENCES USER(idUser)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: USER_CATEGORY
+#------------------------------------------------------------
+
+CREATE TABLE USER_CATEGORY(
+        idUserCategory   Int  Auto_increment  NOT NULL ,
+        userCategoryName Varchar (255) NOT NULL
+	,CONSTRAINT USER_CATEGORY_PK PRIMARY KEY (idUserCategory)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: PROPERTY_CATEGORY
+#------------------------------------------------------------
+
+CREATE TABLE PROPERTY_CATEGORY(
+        idPropertyCategory   Int  Auto_increment  NOT NULL ,
+        propertyCategoryName Varchar (150) NOT NULL
+	,CONSTRAINT PROPERTY_CATEGORY_PK PRIMARY KEY (idPropertyCategory)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: PROPERTY
+#------------------------------------------------------------
+
+CREATE TABLE PROPERTY(
+        idProperty           Int  Auto_increment  NOT NULL ,
+        propertyCountry      Varchar (150) NOT NULL ,
+        propertyAddress      Varchar (150) NOT NULL ,
+        propertyCity         Varchar (150) NOT NULL ,
+        propertyZipCode      Int NOT NULL ,
+        propertyNbRooms      Int NOT NULL ,
+        propertyNbKitchen    Int NOT NULL ,
+        propertyNbBathroom   Int NOT NULL ,
+        propertyNbWc         Int NOT NULL ,
+        propertyNbLivingRoom Int NOT NULL ,
+        idAdvertisement      Int ,
+        idPropertyCategory   Int NOT NULL
+	,CONSTRAINT PROPERTY_PK PRIMARY KEY (idProperty)
+
+	,CONSTRAINT PROPERTY_ADVERTISEMENT_FK FOREIGN KEY (idAdvertisement) REFERENCES ADVERTISEMENT(idAdvertisement)
+	,CONSTRAINT PROPERTY_PROPERTY_CATEGORY0_FK FOREIGN KEY (idPropertyCategory) REFERENCES PROPERTY_CATEGORY(idPropertyCategory)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: PROPERTY_MEDIA
+#------------------------------------------------------------
+
+CREATE TABLE PROPERTY_MEDIA(
+        idPropertyMedia  Int  Auto_increment  NOT NULL ,
+        propertyMediaUrl Varchar (150) NOT NULL ,
+        idProperty       Int NOT NULL
+	,CONSTRAINT PROPERTY_MEDIA_PK PRIMARY KEY (idPropertyMedia)
+
+	,CONSTRAINT PROPERTY_MEDIA_PROPERTY_FK FOREIGN KEY (idProperty) REFERENCES PROPERTY(idProperty)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: user belongs to
+#------------------------------------------------------------
+
+CREATE TABLE user_belongs_to(
+        idAgency Int NOT NULL ,
+        idUser   Int NOT NULL
+	,CONSTRAINT user_belongs_to_PK PRIMARY KEY (idAgency,idUser)
+
+	,CONSTRAINT user_belongs_to_AGENCY_FK FOREIGN KEY (idAgency) REFERENCES AGENCY(idAgency)
+	,CONSTRAINT user_belongs_to_USER0_FK FOREIGN KEY (idUser) REFERENCES USER(idUser)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: user is
+#------------------------------------------------------------
+
+CREATE TABLE user_is(
+        idUserCategory Int NOT NULL ,
+        idUser         Int NOT NULL
+	,CONSTRAINT user_is_PK PRIMARY KEY (idUserCategory,idUser)
+
+	,CONSTRAINT user_is_USER_CATEGORY_FK FOREIGN KEY (idUserCategory) REFERENCES USER_CATEGORY(idUserCategory)
+	,CONSTRAINT user_is_USER0_FK FOREIGN KEY (idUser) REFERENCES USER(idUser)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: user updates
+#------------------------------------------------------------
+
+CREATE TABLE user_updates(
+        idAdvertisement Int NOT NULL ,
+        idUser          Int NOT NULL ,
+        userUpdateDate  TimeStamp NOT NULL
+	,CONSTRAINT user_updates_PK PRIMARY KEY (idAdvertisement,idUser)
+
+	,CONSTRAINT user_updates_ADVERTISEMENT_FK FOREIGN KEY (idAdvertisement) REFERENCES ADVERTISEMENT(idAdvertisement)
+	,CONSTRAINT user_updates_USER0_FK FOREIGN KEY (idUser) REFERENCES USER(idUser)
+)ENGINE=InnoDB;
+```
+
+# SQL database in PhpMyAdmin:  
+Using the previous, we can generate the SQL database in MySQL:  
+![image](https://user-images.githubusercontent.com/61125395/121763217-7bc54680-cb3a-11eb-9901-4a9b4f6a7a0b.png)   
+
+# User Case Simulation:  
+By adding step by step data in our database we can try to simulate a user case:  
+1- Step1: Let's add some users to manage advertisments, here is an example of SQL query to add users:  
+```SQL
+INSERT INTO `user` (`idUser`, `userFirstname`, `userLastname`, `userEmail`, `userPassword`, `userCountry`, `userAddress`, `userCity`, `userZipCode`, `userSalary`, `userCommission`) VALUES (NULL, 'stephane', 'plazza', 'stephane.plazza@perso.com', '123456', 'france', '1 rue de la chance', 'paris', '75016', '50000', '0.05'), (NULL, 'michel', 'durant', 'michel.durant@perso.com', '123456', 'france', '16 rue de la bouteille', 'paris', '75005', '40000', '0.04'), (NULL, 'sophia', 'dupont', 'sophia.dupont@perso.com', '123456', 'belgique', '20 bd voltaire', 'bruges', '8000', '45000', '0.05'), (NULL, 'vince', 'carter', 'vince.carter@perso.com', '123456', 'angleterre', '1 square garden', 'london', '533537', '40000', '0.05');
+```
+2- Step2: Let's add some user categories to asign roles to users:
+```SQL
+INSERT INTO `user_category` (`idUserCategory`, `userCategoryName`) VALUES (NULL, 'manager'), (NULL, 'negociator'), (NULL, 'agent'), (NULL, 'secretary');
+```
+3- Step3: Let's link users to roles in table "user_is":
+```SQL
+INSERT INTO `user_is` (`idUserCategory`, `idUser`) VALUES ('1', '1'), ('2', '1'), ('3', '4'), ('4', '1');
+```
+4- Step4: Let's add some agencies:  
+```SQL
+INSERT INTO `agency` (`idAgency`, `agencyName`, `agencyCountry`, `agencyAddress`, `agencyCity`, `agencyZipCode`, `agencyRegistrationNumber`) VALUES (NULL, 'plazza immo', 'france', '1 bd des champs elysées', 'paris', '75001','12345gft258'), (NULL, 'la foret', 'france', '26 rue des invalides', 'bordeaux', '30072', '369poi147');
+```
+5- Step5: Let's link users to agencies:  
+```SQL
+INSERT INTO `user_belongs_to` (`idAgency`, `idUser`) VALUES ('2', '3'), ('1', '1'), ('2', '4'), ('1', '4');
+```
+6- Step6: Let's add some property categories: 
+```SQL
+INSERT INTO `property_category` (`idPropertyCategory`, `propertyCategoryName`) VALUES (NULL, 'flat'), (NULL, 'house'), (NULL, 'loft'), (NULL, 'parking'), (NULL, 'garden'), (NULL, 'castle');
+```
+7- Step7: Let's add some properties:  
+```SQL
+INSERT INTO `property` (`idProperty`, `propertyCountry`, `propertyAddress`, `propertyCity`, `propertyZipCode`, `propertyNbRooms`, `propertyNbKitchen`, `propertyNbBathroom`, `propertyNbWc`, `propertyNbLivingRoom`, `idPropertyCategory`) VALUES (NULL, 'france', '1 rue de la joie', 'paris', '75005', '2', '1', '1', '1', '1', '3'), (NULL, 'france', '26 bd des fortunes', 'nantes', '44000', '4', '1', '2', '2', '1', '4');
+```
+8- Step8: Let's add some property medias:  
+```SQL
+INSERT INTO `property_media` (`idPropertyMedia`, `propertyMediaUrl`, `idProperty`) VALUES (NULL, 'https://photo.album.com/img6.jpg', '1'), (NULL, 'https://photo.album.com/img7.jpg', '2');
+```
+9- Step9: Let's add some advertisements:  
+```SQL
+INSERT INTO `advertisement` (`idAdvertisement`, `advertisementTitle`, `advertisementDescription`, `advertisementPrice`, `agencyPublishDate`, `userRegisterDate`, `idAgency`, `idUser`) VALUES (NULL, 'Appartement 2 pieces a vendre', 'fjdshfjkdsfk sfhj gjh', '200000', '2021-06-02 03:32:18', '2021-06-01 00:59:03', '2', '2'), (NULL, 'maison 4 pieces a vendre', 'fjkhsdjfkdhsk', '350000', '2021-06-05 03:32:18', '2021-06-03 03:27:55', '1', '3');
+```
+10- Step10: Let's simulate an update from a user:  
+```SQL
+INSERT INTO `user_updates` (`idAdvertisement`, `idUser`, `userUpdateDate`) VALUES ('1', '2', '2021-06-08 03:33:26');
+```
+
+
+
+  
 
