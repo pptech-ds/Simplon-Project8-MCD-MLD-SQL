@@ -1,3 +1,11 @@
+# Table of Contents 
+- [Project-Specification](#Project-Specification) 
+- [CDM-(MCD-in-French)-based-on-inputs](#CDM-(MCD-in-French)-based-on-inputs) 
+- [LDM-(MLD-in-French)-generated-from-CDM](#LDM-(MLD-in-French)-generated-from-CDM) 
+- [SQL-database-in-PhpMyAdmin](#SQL-database-in-PhpMyAdmin) 
+- [User-Case-Simulation](#User-Case-Simulation) 
+- [SQL-request-to-show-advertisements-on-page](#SQL-request-to-show-advertisements-on-page) 
+
 # Project-Specification
 For a group of real estate agencies, you have to model the database with the following inputs:  
   - Agencies have negotiators who find and register property for sale.  
@@ -6,7 +14,7 @@ For a group of real estate agencies, you have to model the database with the fol
   - All advertisements have medias like photo or videos.
   - You can complete with any other informations.  
 
-# CDM (MCD in French) based on inputs:  
+# CDM-(MCD-in-French)-based-on-inputs  
 ![image](https://user-images.githubusercontent.com/61125395/121763697-6e11c000-cb3e-11eb-9301-9a5f632cb7db.png)          
 - Entities with their attributes:
   - USER:  
@@ -34,7 +42,7 @@ For a group of real estate agencies, you have to model the database with the fol
   - USER(0,n)->(user registers)->(1,1)ADVERTISEMENT: One user can register 0 or many advertisments, but one advertisments can be registered by one and only one user.
   - USER(0,n)->(user updates)->(0,n)ADVERTISEMENT: One user can updates 0 to many times the advertisement, the advertisement can be updated 0 to many times.   
 
-# LDM (MLD in French) generated from CDM:
+# LDM-(MLD-in-French)-generated-from-CDM
 ![image](https://user-images.githubusercontent.com/61125395/121762761-43bd0400-cb38-11eb-8e9f-ca7d1f47edca.png)  
 We finally have 10 entities, we had 7 entities in our CDM, some relationships have be changed to entities with foreign keys.  
 
@@ -205,11 +213,11 @@ CREATE TABLE user_updates(
 )ENGINE=InnoDB;
 ```
 
-# SQL database in PhpMyAdmin:  
+# SQL-database-in-PhpMyAdmin  
 Using the previous script, we can generate the SQL database in MySQL:  
 ![image](https://user-images.githubusercontent.com/61125395/121763217-7bc54680-cb3a-11eb-9901-4a9b4f6a7a0b.png)   
 
-# User Case Simulation:  
+# User-Case-Simulation  
 By adding step by step data in our database we can try to simulate a user case:  
 1- Step1: Let's add some users to manage advertisments:  
 ```SQL
@@ -272,7 +280,7 @@ INSERT INTO `user_updates` (`idAdvertisement`, `idUser`, `userUpdateDate`) VALUE
 ![image](https://user-images.githubusercontent.com/61125395/121764004-95698c80-cb40-11eb-84c9-8c7043d827b1.png)  
 
 
-# SQL request to show advertisements on page:  
+# SQL-request-to-show-advertisements-on-page  
 Let's assume a previous request has been done to build the attribute "description" of table "advertisments", and we want to aggregate all other informations like user who has publised the advertisement. Here is the SQL request and result:  
 ```SQL
 SELECT `advertisementTitle`,`advertisementDescription`,`advertisementPrice`,`agencyPublishDate`,`userRegisterDate`, user.userFirstname, user.userLastname, user.userEmail
