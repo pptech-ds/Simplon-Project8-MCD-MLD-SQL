@@ -1,6 +1,6 @@
 # Table of Contents 
 - [Project-Specification](#Project-Specification) 
-- [CDM-Conceptual-Data-Model-Based-On-Specification](#CCDM-Conceptual-Data-Model-Based-On-Specification) 
+- [CDM-Conceptual-Data-Model-Based-On-Specification](#CDM-Conceptual-Data-Model-Based-On-Specification) 
 - [LDM-Logical-Data-Model-Generated-From-CDM](#LDM-Logical-Data-Model-Generated-From-CDM) 
 - [SQL-Script-Generated-From-CDM](#SQL-Script-Generated-From-CDM) 
 - [SQL-database-in-PhpMyAdmin](#SQL-database-in-PhpMyAdmin) 
