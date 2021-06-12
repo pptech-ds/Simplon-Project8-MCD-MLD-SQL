@@ -206,7 +206,7 @@ CREATE TABLE user_updates(
 ```
 
 # SQL database in PhpMyAdmin:  
-Using the previous, we can generate the SQL database in MySQL:  
+Using the previous script, we can generate the SQL database in MySQL:  
 ![image](https://user-images.githubusercontent.com/61125395/121763217-7bc54680-cb3a-11eb-9901-4a9b4f6a7a0b.png)   
 
 # User Case Simulation:  
