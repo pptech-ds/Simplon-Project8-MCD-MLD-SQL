@@ -1,7 +1,7 @@
 # Table of Contents 
 - [Project-Specification](#Project-Specification) 
-- [CDM-MCD-in-French-based-on-inputs](#CDM-MCD-in-French-based-on-inputs) 
-- [LDM-MLD-in-French-generated-from-CDM](#LDM-MLD-in-French-generated-from-CDM) 
+- [CDM-Conceptual-Data-Model-Based-On-Specification](#CCDM-Conceptual-Data-Model-Based-On-Specification) 
+- [LDM-Logical-Data-Model-Generated-From-CDM](#LDM-Logical-Data-Model-Generated-From-CDM) 
 - [SQL-Script-Generated-From-CDM](#SQL-Script-Generated-From-CDM) 
 - [SQL-database-in-PhpMyAdmin](#SQL-database-in-PhpMyAdmin) 
 - [User-Case-Simulation](#User-Case-Simulation) 
@@ -15,7 +15,7 @@ For a group of real estate agencies, you have to model the database with the fol
   - All advertisements have medias like photo or videos.
   - You can complete with any other informations.  
 
-# CDM-Conceptual-Data-Model-based-on-inputs  
+# CDM-Conceptual-Data-Model-Based-On-Specification  
 ![image](https://user-images.githubusercontent.com/61125395/121778862-38e68b80-cb99-11eb-8be4-08908e614514.png)          
 - Entities with their attributes:
   - USER:  
@@ -44,7 +44,7 @@ For a group of real estate agencies, you have to model the database with the fol
   - PROPERTY(1,1)->(property is)->(0,n)PROPERTY_CATEGORY: A property need to be in one and only one specific category, it can a flat, house, parking, garage, office, castle etc ... One category can have 0 to many properties.  
  
  
-# LDM-Logical-Data-Model-generated-from-CDM
+# LDM-Logical-Data-Model-Generated-From-CDM
 ![image](https://user-images.githubusercontent.com/61125395/121779740-86fd8e00-cb9d-11eb-9311-03ec6d611a1f.png)   
 We finally have 10 entities, we had 7 entities in our CDM, some relationships have be changed to entities with foreign keys.  
 
