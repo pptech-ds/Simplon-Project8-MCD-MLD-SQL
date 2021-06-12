@@ -1,7 +1,7 @@
 # Table of Contents 
 - [Project-Specification](#Project-Specification) 
-- [CDM-(MCD-in-French)-based-on-inputs](#CDM-(MCD-in-French)-based-on-inputs) 
-- [LDM-(MLD-in-French)-generated-from-CDM](#LDM-(MLD-in-French)-generated-from-CDM) 
+- [CDM-MCD-in-French-based-on-inputs](#CDM-MCD-in-French-based-on-inputs) 
+- [LDM-MLD-in-French-generated-from-CDM](#LDM-MLD-in-French-generated-from-CDM) 
 - [SQL-database-in-PhpMyAdmin](#SQL-database-in-PhpMyAdmin) 
 - [User-Case-Simulation](#User-Case-Simulation) 
 - [SQL-request-to-show-advertisements-on-page](#SQL-request-to-show-advertisements-on-page) 
@@ -14,7 +14,7 @@ For a group of real estate agencies, you have to model the database with the fol
   - All advertisements have medias like photo or videos.
   - You can complete with any other informations.  
 
-# CDM-(MCD-in-French)-based-on-inputs  
+# CDM-MCD-in-French-based-on-inputs  
 ![image](https://user-images.githubusercontent.com/61125395/121763697-6e11c000-cb3e-11eb-9301-9a5f632cb7db.png)          
 - Entities with their attributes:
   - USER:  
@@ -42,7 +42,7 @@ For a group of real estate agencies, you have to model the database with the fol
   - USER(0,n)->(user registers)->(1,1)ADVERTISEMENT: One user can register 0 or many advertisments, but one advertisments can be registered by one and only one user.
   - USER(0,n)->(user updates)->(0,n)ADVERTISEMENT: One user can updates 0 to many times the advertisement, the advertisement can be updated 0 to many times.   
 
-# LDM-(MLD-in-French)-generated-from-CDM
+# LDM-MLD-in-French-generated-from-CDM
 ![image](https://user-images.githubusercontent.com/61125395/121762761-43bd0400-cb38-11eb-8e9f-ca7d1f47edca.png)  
 We finally have 10 entities, we had 7 entities in our CDM, some relationships have be changed to entities with foreign keys.  
 
