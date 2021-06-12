@@ -272,6 +272,15 @@ INSERT INTO `user_updates` (`idAdvertisement`, `idUser`, `userUpdateDate`) VALUE
 ![image](https://user-images.githubusercontent.com/61125395/121764004-95698c80-cb40-11eb-84c9-8c7043d827b1.png)  
 
 
+# SQL request to show advertisements on page:  
+Let's assume a previous request has been done to build the attribute "description" of table "advertisments", and we want to aggregate all other informations like user who has publised the advertisement. Here is the SQL request and result:  
+```SQL
+SELECT `advertisementTitle`,`advertisementDescription`,`advertisementPrice`,`agencyPublishDate`,`userRegisterDate`, user.userFirstname, user.userLastname, user.userEmail
+FROM `advertisement` 
+INNER JOIN user
+WHERE advertisement.idUser = user.idUser
+```
+![image](https://user-images.githubusercontent.com/61125395/121764434-1f672480-cb44-11eb-8697-9fabb79d0deb.png)
 
   
 
