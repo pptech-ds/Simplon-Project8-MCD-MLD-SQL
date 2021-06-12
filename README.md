@@ -5,7 +5,7 @@
 - [SQL-Script-Generated-From-CDM](#SQL-Script-Generated-From-CDM) 
 - [SQL-database-in-PhpMyAdmin](#SQL-database-in-PhpMyAdmin) 
 - [User-Case-Simulation](#User-Case-Simulation) 
-- [SQL-request-to-show-advertisements-on-page](#SQL-request-to-show-advertisements-on-page) 
+- [SQL-Request-To-Show-Advertisements-On-Page](#SQL-Request-To-Show-Advertisements-On-Page) 
 
 # Project-Specification
 For a group of real estate agencies, you have to model the database with the following inputs:  
@@ -221,72 +221,72 @@ CREATE TABLE user_updates(
 
 # SQL-database-in-PhpMyAdmin  
 Using the previous script, we can generate the SQL database in MySQL:  
-![image](https://user-images.githubusercontent.com/61125395/121763217-7bc54680-cb3a-11eb-9901-4a9b4f6a7a0b.png)   
+![image](https://user-images.githubusercontent.com/61125395/121779888-21f66800-cb9e-11eb-8237-e87485ad4bb0.png)     
 
 # User-Case-Simulation  
 By adding step by step data in our database we can try to simulate a user case:  
 1- Step1: Let's add some users to manage advertisments:  
 ```SQL
-INSERT INTO `user` (`idUser`, `userFirstname`, `userLastname`, `userEmail`, `userPassword`, `userCountry`, `userAddress`, `userCity`, `userZipCode`, `userSalary`, `userCommission`) VALUES (NULL, 'stephane', 'plazza', 'stephane.plazza@perso.com', '123456', 'france', '1 rue de la chance', 'paris', '75016', '50000', '0.05'), (NULL, 'michel', 'durant', 'michel.durant@perso.com', '123456', 'france', '16 rue de la bouteille', 'paris', '75005', '40000', '0.04'), (NULL, 'sophia', 'dupont', 'sophia.dupont@perso.com', '123456', 'belgique', '20 bd voltaire', 'bruges', '8000', '45000', '0.05'), (NULL, 'vince', 'carter', 'vince.carter@perso.com', '123456', 'angleterre', '1 square garden', 'london', '533537', '40000', '0.05');
+INSERT INTO `user` (`idUser`, `userFirstname`, `userLastname`, `userEmail`, `userPassword`, `userPhoneNumber`, `userCountry`, `userAddress`, `userCity`, `userZipCode`, `userSalary`, `userCommission`) VALUES (NULL, 'stephane', 'plazza', 'stephane.plazza@perso.com', '123456', '0123456789', 'france', '1 rue de la chance', 'paris', '75016', '50000', '0.05');
 ```
-![image](https://user-images.githubusercontent.com/61125395/121763916-e2992e80-cb3f-11eb-98f3-1006124242ce.png)  
+![image](https://user-images.githubusercontent.com/61125395/121780065-f32cc180-cb9e-11eb-9ae7-9beceea2d792.png)    
 
 2- Step2: Let's add some user categories to asign roles to users:
 ```SQL
-INSERT INTO `user_category` (`idUserCategory`, `userCategoryName`) VALUES (NULL, 'manager'), (NULL, 'negociator'), (NULL, 'agent'), (NULL, 'secretary');
+INSERT INTO `user_category` (`idUserCategory`, `userCategoryName`) VALUES (NULL, 'manager');
 ```
-![image](https://user-images.githubusercontent.com/61125395/121763921-f47ad180-cb3f-11eb-8b6d-4a363f60b478.png)  
+![image](https://user-images.githubusercontent.com/61125395/121780126-3b4be400-cb9f-11eb-9b0e-af241e1f779b.png)    
 
 3- Step3: Let's link users to roles in table "user_is":
 ```SQL
-INSERT INTO `user_is` (`idUserCategory`, `idUser`) VALUES ('1', '1'), ('2', '1'), ('3', '4'), ('4', '1');
+INSERT INTO `user_is` (`idUserCategory`, `idUser`) VALUES ('1', '1');
 ```
-![image](https://user-images.githubusercontent.com/61125395/121763940-196f4480-cb40-11eb-8a44-973a15f518e4.png)  
+![image](https://user-images.githubusercontent.com/61125395/121780204-9382e600-cb9f-11eb-9856-327604f138e5.png)    
 
 4- Step4: Let's add some agencies:  
 ```SQL
-INSERT INTO `agency` (`idAgency`, `agencyName`, `agencyCountry`, `agencyAddress`, `agencyCity`, `agencyZipCode`, `agencyRegistrationNumber`) VALUES (NULL, 'plazza immo', 'france', '1 bd des champs elysées', 'paris', '75001','12345gft258'), (NULL, 'la foret', 'france', '26 rue des invalides', 'bordeaux', '30072', '369poi147');
+INSERT INTO `agency` (`idAgency`, `agencyName`, `agencyPhoneNumber`, `agencyEmail`, `agencyCountry`, `agencyAddress`, `agencyCity`, `agencyZipCode`, `agencyRegistrationNumber`) VALUES (NULL, 'plazza immo', '0123456789', 'plazza.info@perso.com', 'france', '1 rue de la decouverte', 'paris', '75001', '15898zae547ezf');
 ```
-![image](https://user-images.githubusercontent.com/61125395/121763953-2855f700-cb40-11eb-9592-0f3228799d2e.png)  
+![image](https://user-images.githubusercontent.com/61125395/121780313-05f3c600-cba0-11eb-92c1-d4ffe75c3b76.png)  
 
 5- Step5: Let's link users to agencies:  
 ```SQL
-INSERT INTO `user_belongs_to` (`idAgency`, `idUser`) VALUES ('2', '3'), ('1', '1'), ('2', '4'), ('1', '4');
+INSERT INTO `user_belongs_to` (`idAgency`, `idUser`) VALUES ('3', '4');
 ```
-![image](https://user-images.githubusercontent.com/61125395/121763963-3f94e480-cb40-11eb-8dad-24bca54b68a4.png)  
+![image](https://user-images.githubusercontent.com/61125395/121780390-5703ba00-cba0-11eb-8ea1-c4d1d380262c.png)  
 
 6- Step6: Let's add some property categories: 
 ```SQL
-INSERT INTO `property_category` (`idPropertyCategory`, `propertyCategoryName`) VALUES (NULL, 'flat'), (NULL, 'house'), (NULL, 'loft'), (NULL, 'parking'), (NULL, 'garden'), (NULL, 'castle');
+INSERT INTO `property_category` (`idPropertyCategory`, `propertyCategoryName`) VALUES (NULL, 'flat');
 ```
-![image](https://user-images.githubusercontent.com/61125395/121763974-59362c00-cb40-11eb-95c3-cf22316d7bc1.png)  
+![image](https://user-images.githubusercontent.com/61125395/121780459-a944db00-cba0-11eb-8d77-0c1bff4913fc.png)   
 
 7- Step7: Let's add some properties:  
 ```SQL
-INSERT INTO `property` (`idProperty`, `propertyCountry`, `propertyAddress`, `propertyCity`, `propertyZipCode`, `propertyNbRooms`, `propertyNbKitchen`, `propertyNbBathroom`, `propertyNbWc`, `propertyNbLivingRoom`, `idPropertyCategory`) VALUES (NULL, 'france', '1 rue de la joie', 'paris', '75005', '2', '1', '1', '1', '1', '3'), (NULL, 'france', '26 bd des fortunes', 'nantes', '44000', '4', '1', '2', '2', '1', '4');
+INSERT INTO `property` (`idProperty`, `propertyName`, `propertyContactFirstname`, `propertyContactLastname`, `propertyContactPhoneNumber`, `propertyContactEmail`, `propertyCountry`, `propertyAddress`, `propertyCity`, `propertyZipCode`, `propertyDetails`, `userNegociationDate`, `idAdvertisement`, `idPropertyCategory`, `idUser`) VALUES (NULL, 'Appartement 3 pieces paris 13', 'jacque', 'martin', '0123456789', 'dqsd@ssg.com', 'france', 'sqdqsd', 'paris', '75005', 'qsdqsd', '2021-06-02 17:07:49', NULL, '1', '4');
 ```
-![image](https://user-images.githubusercontent.com/61125395/121763983-67844800-cb40-11eb-9f2f-e3586d0134a8.png)  
+![image](https://user-images.githubusercontent.com/61125395/121780596-5c153900-cba1-11eb-9e2a-bbea6c7602f1.png)    
 
 8- Step8: Let's add some property medias:  
 ```SQL
-INSERT INTO `property_media` (`idPropertyMedia`, `propertyMediaUrl`, `idProperty`) VALUES (NULL, 'https://photo.album.com/img6.jpg', '1'), (NULL, 'https://photo.album.com/img7.jpg', '2');
+INSERT INTO `property_media` (`idPropertyMedia`, `propertyMediaUrl`, `idProperty`) VALUES (NULL, 'https://album.photo.com/img1.jpg', '1');
 ```
-![image](https://user-images.githubusercontent.com/61125395/121763990-74a13700-cb40-11eb-8a70-5bc8ddff1be2.png)  
+![image](https://user-images.githubusercontent.com/61125395/121780651-9e3e7a80-cba1-11eb-9f24-ae7e1c5a5988.png)    
 
 9- Step9: Let's add some advertisements:  
 ```SQL
-INSERT INTO `advertisement` (`idAdvertisement`, `advertisementTitle`, `advertisementDescription`, `advertisementPrice`, `agencyPublishDate`, `userRegisterDate`, `idAgency`, `idUser`) VALUES (NULL, 'Appartement 2 pieces a vendre', 'fjdshfjkdsfk sfhj gjh', '200000', '2021-06-02 03:32:18', '2021-06-01 00:59:03', '2', '2'), (NULL, 'maison 4 pieces a vendre', 'fjkhsdjfkdhsk', '350000', '2021-06-05 03:32:18', '2021-06-03 03:27:55', '1', '3');
+INSERT INTO `advertisement` (`idAdvertisement`, `advertisementTitle`, `advertisementDescription`, `advertisementPrice`, `userPlublishDate`, `idUser`) VALUES (NULL, 'Appartement 3 pieces sur Paris', 'qsdqsd', '300000', '2021-06-02 17:14:31', '2');
 ```
-![image](https://user-images.githubusercontent.com/61125395/121763998-8aaef780-cb40-11eb-886f-55dfe47c6058.png)  
+![image](https://user-images.githubusercontent.com/61125395/121780717-e2317f80-cba1-11eb-8448-e9a0e30babe6.png)    
 
 10- Step10: Let's simulate an update from a user:  
 ```SQL
-INSERT INTO `user_updates` (`idAdvertisement`, `idUser`, `userUpdateDate`) VALUES ('1', '2', '2021-06-08 03:33:26');
+INSERT INTO `user_updates` (`idAdvertisement`, `idUser`, `userUpdateDate`) VALUES ('1', '5', '2021-06-19 17:17:21');
 ```
-![image](https://user-images.githubusercontent.com/61125395/121764004-95698c80-cb40-11eb-84c9-8c7043d827b1.png)  
+![image](https://user-images.githubusercontent.com/61125395/121780775-21f86700-cba2-11eb-92e7-c1e152f640ed.png)  
 
 
-# SQL-request-to-show-advertisements-on-page  
+# SQL-Request-To-Show-Advertisements-On-Page  
 Let's assume a previous request has been done to build the attribute "description" of table "advertisments", and we want to aggregate all other informations like user who has publised the advertisement. Here is the SQL request and result:  
 ```SQL
 SELECT `advertisementTitle`,`advertisementDescription`,`advertisementPrice`,`agencyPublishDate`,`userRegisterDate`, user.userFirstname, user.userLastname, user.userEmail
