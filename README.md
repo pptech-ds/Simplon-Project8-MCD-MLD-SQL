@@ -7,8 +7,6 @@
 - [User-Case-Simulation](#User-Case-Simulation) 
 - [SQL-Request-To-Show-Advertisements-On-Page](#SQL-Request-To-Show-Advertisements-On-Page) 
 
-<p>Some Markdown text with <span style="color:red">some <em>blue</em> text</span>.</p>
-
 # Project-Specification
 For a group of real estate agencies, you have to model the database with the following inputs:  
   - Agencies have negotiators who find and register property for sale.  
