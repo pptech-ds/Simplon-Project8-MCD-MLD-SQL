@@ -2,6 +2,7 @@
 - [Project-Specification](#Project-Specification) 
 - [CDM-MCD-in-French-based-on-inputs](#CDM-MCD-in-French-based-on-inputs) 
 - [LDM-MLD-in-French-generated-from-CDM](#LDM-MLD-in-French-generated-from-CDM) 
+- [SQL-Script-Generated-From-CDM](#SQL-Script-Generated-From-CDM) 
 - [SQL-database-in-PhpMyAdmin](#SQL-database-in-PhpMyAdmin) 
 - [User-Case-Simulation](#User-Case-Simulation) 
 - [SQL-request-to-show-advertisements-on-page](#SQL-request-to-show-advertisements-on-page) 
@@ -14,7 +15,7 @@ For a group of real estate agencies, you have to model the database with the fol
   - All advertisements have medias like photo or videos.
   - You can complete with any other informations.  
 
-# CDM-MCD-in-French-based-on-inputs  
+# CDM-Conceptual-Data-Model-based-on-inputs  
 ![image](https://user-images.githubusercontent.com/61125395/121778862-38e68b80-cb99-11eb-8be4-08908e614514.png)          
 - Entities with their attributes:
   - USER:  
@@ -43,12 +44,12 @@ For a group of real estate agencies, you have to model the database with the fol
   - PROPERTY(1,1)->(property is)->(0,n)PROPERTY_CATEGORY: A property need to be in one and only one specific category, it can a flat, house, parking, garage, office, castle etc ... One category can have 0 to many properties.  
  
  
-# LDM-MLD-in-French-generated-from-CDM
-![image](https://user-images.githubusercontent.com/61125395/121762761-43bd0400-cb38-11eb-8e9f-ca7d1f47edca.png)  
+# LDM-Logical-Data-Model-generated-from-CDM
+![image](https://user-images.githubusercontent.com/61125395/121779740-86fd8e00-cb9d-11eb-9311-03ec6d611a1f.png)   
 We finally have 10 entities, we had 7 entities in our CDM, some relationships have be changed to entities with foreign keys.  
 
-# SQL script generated from CDM:  
-I had to complete the last table beacause of limitation from JMerise free version.  
+# SQL-Script-Generated-From-CDM  
+I had to complete the last table myself beacause of limitation from JMerise free version.  
 ```SQL
 #------------------------------------------------------------
 #        Script MySQL.
@@ -60,17 +61,18 @@ I had to complete the last table beacause of limitation from JMerise free versio
 #------------------------------------------------------------
 
 CREATE TABLE USER(
-        idUser         Int  Auto_increment  NOT NULL ,
-        userFirstname  Varchar (150) NOT NULL ,
-        userLastname   Varchar (150) NOT NULL ,
-        userEmail      Varchar (150) NOT NULL ,
-        userPassword   Varchar (50) NOT NULL ,
-        userCountry    Varchar (150) NOT NULL ,
-        userAddress    Varchar (150) NOT NULL ,
-        userCity       Varchar (150) NOT NULL ,
-        userZipCode    Int NOT NULL ,
-        userSalary     Float NOT NULL ,
-        userCommission Float NOT NULL
+        idUser          Int  Auto_increment  NOT NULL ,
+        userFirstname   Varchar (150) NOT NULL ,
+        userLastname    Varchar (150) NOT NULL ,
+        userEmail       Varchar (150) NOT NULL ,
+        userPassword    Varchar (50) NOT NULL ,
+        userPhoneNumber Int NOT NULL ,
+        userCountry     Varchar (150) NOT NULL ,
+        userAddress     Varchar (150) NOT NULL ,
+        userCity        Varchar (150) NOT NULL ,
+        userZipCode     Int NOT NULL ,
+        userSalary      Float NOT NULL ,
+        userCommission  Float NOT NULL
 	,CONSTRAINT USER_PK PRIMARY KEY (idUser)
 )ENGINE=InnoDB;
 
@@ -82,6 +84,8 @@ CREATE TABLE USER(
 CREATE TABLE AGENCY(
         idAgency                 Int  Auto_increment  NOT NULL ,
         agencyName               Varchar (150) NOT NULL ,
+        agencyPhoneNumber        Int NOT NULL ,
+        agencyEmail              Varchar (50) NOT NULL ,
         agencyCountry            Varchar (150) NOT NULL ,
         agencyAddress            Varchar (150) NOT NULL ,
         agencyCity               Varchar (150) NOT NULL ,
@@ -100,14 +104,11 @@ CREATE TABLE ADVERTISEMENT(
         advertisementTitle       Varchar (150) NOT NULL ,
         advertisementDescription Varchar (500) NOT NULL ,
         advertisementPrice       Float NOT NULL ,
-        agencyPublishDate        TimeStamp NOT NULL ,
-        userRegisterDate         TimeStamp NOT NULL ,
-        idAgency                 Int NOT NULL ,
+        userPlublishDate         TimeStamp NOT NULL ,
         idUser                   Int NOT NULL
 	,CONSTRAINT ADVERTISEMENT_PK PRIMARY KEY (idAdvertisement)
 
-	,CONSTRAINT ADVERTISEMENT_AGENCY_FK FOREIGN KEY (idAgency) REFERENCES AGENCY(idAgency)
-	,CONSTRAINT ADVERTISEMENT_USER0_FK FOREIGN KEY (idUser) REFERENCES USER(idUser)
+	,CONSTRAINT ADVERTISEMENT_USER_FK FOREIGN KEY (idUser) REFERENCES USER(idUser)
 )ENGINE=InnoDB;
 
 
@@ -138,22 +139,26 @@ CREATE TABLE PROPERTY_CATEGORY(
 #------------------------------------------------------------
 
 CREATE TABLE PROPERTY(
-        idProperty           Int  Auto_increment  NOT NULL ,
-        propertyCountry      Varchar (150) NOT NULL ,
-        propertyAddress      Varchar (150) NOT NULL ,
-        propertyCity         Varchar (150) NOT NULL ,
-        propertyZipCode      Int NOT NULL ,
-        propertyNbRooms      Int NOT NULL ,
-        propertyNbKitchen    Int NOT NULL ,
-        propertyNbBathroom   Int NOT NULL ,
-        propertyNbWc         Int NOT NULL ,
-        propertyNbLivingRoom Int NOT NULL ,
-        idAdvertisement      Int ,
-        idPropertyCategory   Int NOT NULL
+        idProperty                 Int  Auto_increment  NOT NULL ,
+        propertyName               Varchar (150) NOT NULL ,
+        propertyContactFirstname   Varchar (150) NOT NULL ,
+        propertyContactLastname    Varchar (150) NOT NULL ,
+        propertyContactPhoneNumber Int NOT NULL ,
+        propertyContactEmail       Varchar (150) NOT NULL ,
+        propertyCountry            Varchar (150) NOT NULL ,
+        propertyAddress            Varchar (150) NOT NULL ,
+        propertyCity               Varchar (150) NOT NULL ,
+        propertyZipCode            Int NOT NULL ,
+        propertyDetails            Varchar (1000) NOT NULL ,
+        userNegociationDate        TimeStamp NOT NULL ,
+        idAdvertisement            Int ,
+        idPropertyCategory         Int NOT NULL ,
+        idUser                     Int NOT NULL
 	,CONSTRAINT PROPERTY_PK PRIMARY KEY (idProperty)
 
 	,CONSTRAINT PROPERTY_ADVERTISEMENT_FK FOREIGN KEY (idAdvertisement) REFERENCES ADVERTISEMENT(idAdvertisement)
 	,CONSTRAINT PROPERTY_PROPERTY_CATEGORY0_FK FOREIGN KEY (idPropertyCategory) REFERENCES PROPERTY_CATEGORY(idPropertyCategory)
+	,CONSTRAINT PROPERTY_USER1_FK FOREIGN KEY (idUser) REFERENCES USER(idUser)
 )ENGINE=InnoDB;
 
 
