@@ -33,7 +33,7 @@ For a group of real estate agencies, you have to model the database with the fol
   - PROPERTY_MEDIA:  
   ![image](https://user-images.githubusercontent.com/61125395/121779096-43edeb80-cb9a-11eb-8a45-685fc9d1fb51.png)  
   
-- Some explanations about entity relationships and cardinalities:  
+- Some explanations about entities relationships and cardinalities:  
   - USER(1,n)->(user is)->(0,n)USER_CATEGORY: About categories, we can have "manager", "negociator", "agent", "secretary" or "publisher". Here we define user roles, one user need to have at least one role, but he can have more than one, for example in a small agency the manager can be also the negociator, the agent and the one who publishes advertisements. For user categories, it's 0 to many because we can empty categories until it will be filled, like secretary for example.
   - USER(0,n)->(user belongs to)->(1,n)AGENCY: One user can belong to 0 or many agencies because the user can be a freelancer and he can work with any companies, the agency need to have at least one user, I mean the manager, the reponsible of the agency, an empty agency without anyone to manage it doesn't exist.  
   - USER(0,n)->(user publishes)->(1,1)ADVERTISEMENT: Advertisements will be published by users in specific category "publisher", one user can publish 0 to many advertisements, but one advertisement need to be published by one and only user.  
